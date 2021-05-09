@@ -1,0 +1,47 @@
+table {
+
+  border-radius: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 3%;
+    background-color: #e4e7e7;
+    width: 90%;
+    height:60%;
+    
+  }
+  
+  th, td {
+    text-align: right;
+    padding: 14px;
+  }
+  
+  .cls{
+    width: 20%;
+  }
+
+  th {
+    background-color: rgb(154, 154, 184);
+    color: white;
+  }
+
+  .input{
+    width: 60%;
+    border-radius: 7px;
+  }
+  #sub{
+    width:250px;
+    height:50px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 7px;
+  }
+  input[type="reset"]{
+    width:250px;
+    height:50px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 7px;
+  }
+ 
