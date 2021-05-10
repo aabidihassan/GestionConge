@@ -130,7 +130,8 @@
                 'يوليوز', 'غشت', 'شتنبر',	'أكتوبر', 'نونبر', 'دجنبر'],
                 dayNames: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
                 dayNamesShort: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-                dayNamesMin: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'],
+                //dayNamesMin: ['أ', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'],
+                dayNamesMin: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
                 weekHeader: 'أسبوع',
                 dateFormat: 'dd/mm/yy',
                 firstDay: 6,
@@ -155,13 +156,17 @@
         
         $("form").on('submit', function(e){
             e.preventDefault();
+
             if ($("#jusqua").val() <= $("#de").val()) {
-                alert("المرجو وضع فترة صحيحة !!");
+                //alert("المرجو وضع فترة صحيحة !!");
+                    var dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+                    var d = new Date($("#jusqua").val()).getDay();
+                    alert(dayNames[d]);
             }
             else if($("#jusqua").val() > $("#de").val()){
 
                 if($.datepicker.formatDate("dd/mm/yy",new Date()) >= $("#de").val()){
-                    alert("المرجو وضع فترة صحيحة !!")
+                    alert("المرجو وضع فترة صحيحة !!");
                 }
                 else{
                     var formData =  $('form').serializeArray();
