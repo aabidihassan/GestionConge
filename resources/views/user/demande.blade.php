@@ -129,11 +129,11 @@
                 monthNamesShort: ['يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو',
                 'يوليوز', 'غشت', 'شتنبر',	'أكتوبر', 'نونبر', 'دجنبر'],
                 dayNames: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-                dayNamesShort: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+                dayNamesShort: ["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"],
                 //dayNamesMin: ['أ', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'],
                 dayNamesMin: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
                 weekHeader: 'أسبوع',
-                dateFormat: 'dd/mm/yy',
+                dateFormat: 'yy-mm-dd',
                 firstDay: 6,
                 isRTL: true,
                 showMonthAfterYear: false,
@@ -158,14 +158,11 @@
             e.preventDefault();
 
             if ($("#jusqua").val() <= $("#de").val()) {
-                //alert("المرجو وضع فترة صحيحة !!");
-                    var dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-                    var d = new Date($("#jusqua").val()).getDay();
-                    alert(dayNames[d]);
+                alert("المرجو وضع فترة صحيحة !!");                
             }
             else if($("#jusqua").val() > $("#de").val()){
 
-                if($.datepicker.formatDate("dd/mm/yy",new Date()) >= $("#de").val()){
+                if($.datepicker.formatDate("yy-mm-dd",new Date()) >= $("#de").val()){
                     alert("المرجو وضع فترة صحيحة !!");
                 }
                 else{
@@ -178,6 +175,9 @@
                         success:function(res){
                             alert("تم وضع الطلب بنجاح !!");
                             $("#jusqua, #de").val("");
+                        },
+                        error:function(res){
+                            alert("المعذرة !! لا تتوفرون على هذه الفترة");
                         }
                     });
                 }
