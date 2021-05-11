@@ -26,11 +26,12 @@ class demandesController extends Controller
         $d2 = strtotime($req->jusqua);
 
         $d = $d2 - $d1;
+        $d = $d/(86400)+1;
 
         for ( $i = $d1; $i <= $d2; $i = $i + 86400 ) {
             $day = date('D', $i);
             if($day == "Sat" || $day == "Sun"){
-                $nbJour++;
+                $d--;
             }
           }
         $how = conge::where('id_user', auth()->user()->id)->where('annee', $annee)->get();
@@ -38,11 +39,11 @@ class demandesController extends Controller
         $consom = 0;
 
         foreach($how as $row){
-            $consom+= $row['nbJours'];
+            $consom = $consom + $row->nbJours;
         }
 
-        if($consom + $nbJour < 22){
-
+        if($consom + $d <= 22){
+            
             $data = referance::where('annee', $annee)->get();
 
             $conge = new conge;
@@ -54,7 +55,7 @@ class demandesController extends Controller
             $conge->annee = $req->annee;
             $conge->date_debut = $req->de;
             $conge->date_fin = $req->jusqua;
-            $conge->nbJours = $nbJour;
+            $conge->nbJours = $d;
             $conge->adjoint = 0;
             $conge->chef_service = 0;
             $conge->greffier_chef = 0;
@@ -68,6 +69,6 @@ class demandesController extends Controller
             return response()->json(['bool'=>true]);
         }
 
-        return response()->json(['bool'=>false]);
+        return response()->json(['error' => $d], 500);
     }
 }
