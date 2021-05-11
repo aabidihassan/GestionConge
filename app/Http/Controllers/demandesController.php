@@ -16,6 +16,11 @@ class demandesController extends Controller
         return view('user.demandes',['list'=>$data]);
     }
 
+    static function remplacement(){
+        $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 0)->get();
+        return view('user.demandes',['list'=>$data]);
+    }
+
     static function insertDemande(Request $req){
         $annee = $req->annee;
 
@@ -62,13 +67,20 @@ class demandesController extends Controller
             $conge->etat = 0;
             $conge->save();
 
-            $data = referance::where('annee', $annee)->get();
             referance::where('annee', $annee)
             ->update(['lastNum' => $data[0]->lastNum+1]);
 
             return response()->json(['bool'=>true]);
         }
 
-        return response()->json(['error' => $d], 500);
+        return response()->json(['error' => 'Error'], 500);
     }
+
+    static function adjointAction(Request $req){
+            conge::where('id', $req->idd)
+            ->update(['adjoint' => $req->action]);
+            return response()->json(['bool'=>true]);
+    }
+
 }
+?>

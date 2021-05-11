@@ -1,6 +1,16 @@
 <title>لائحة الطلبات</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link href="css/tablee.css" rel="stylesheet" media="all">
+<style>
+    input[type='submit']{
+        cursor:pointer;
+        width:120px;
+        height:30px;
+        background-color: green;
+        color:white;
+        border-radius:5px;
+    }
+</style>
 
 <x-app-layout>
     <x-slot name="header">
@@ -55,20 +65,80 @@
 
     <table align="center" style="width: 90%;">
     <thead>
-    <tr><th>نوع الرخصة</th><th>السنة</th><th>من</th><th>الى</th><th>القائم بالنيابة</th></tr>
+    <tr><th>رقم الطلب</th><th>المطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
     @foreach($list as $l)
     <tr>
-        <td>{{$l['type']}}</td>
-        <td>{{$l['type']}}</td>
-        <td>{{$l['de']}}</td>
-        <td>{{$l['jusqua']}}</td>
-        <td>{{$l['adjoint']}}</td>
+        <td>{{$l['referance']}}</td>
+        <td>{{$l['id_user']}}</td>
+        <td>{{$l['date_debut']}}</td>
+        <td>{{$l['date_fin']}}</td>
+        <td>{{$l['type_vac']}}</td>
+        <td>
+        <div style="display: flex;">
+            <form id="accept" method="POST" action="{{route('adjointAccepte')}}">
+                @csrf
+                <input type="text" value="{{$l['id']}}" name="id" hidden="true">
+                <input type="submit" value="قبول" name="accept">
+            </form>
+            <form id="decline" method="POST" action="{{route('adjointDecline')}}">
+                @csrf
+                <input type="text" value="{{$l['id']}}" name="id" hidden="true">
+                <input type="submit" value="رفض" name="decline" style="background-color:red;">
+            </form>
+        </div>
+        </td>
     </tr>
     @endforeach
     </thead>
     <tbody>
     </tbody>
     </table>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+
+        $("#accept").on('submit', function(e){
+            e.preventDefault();
+            var idConge = $(this).closest("tr").find("input[name='id']").val();
+            var formData =  $('#accept').serializeArray();
+            formData.push({name: 'idd', value: idConge});
+            formData.push({name: 'action', value: 1});
+                console.log(formData);
+                $.ajax({
+                    url:"{{url('adjointAccepte')}}",
+                    type: 'post',
+                    data: formData,
+                    success:function(res){
+                        alert("تم القبول بنجاح !!");
+                    }
+                });
+        });
+
+        $("#decline").on('submit', function(e){
+            e.preventDefault();
+            var idConge = $(this).closest("tr").find("input[name='id']").val();
+            var formData =  $('#accept').serializeArray();
+            formData.push({name: 'idd', value: idConge});
+            formData.push({name: 'action', value: 5});
+                console.log(formData);
+                $.ajax({
+                    url:"{{url('adjointAccepte')}}",
+                    type: 'post',
+                    data: formData,
+                    success:function(res){
+                        alert("تم الرفض بنجاح !!");
+                    }
+                });
+            
+        });
+
+    </script>
 
 
 

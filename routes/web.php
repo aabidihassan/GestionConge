@@ -41,10 +41,14 @@ Route::get('/demande', function () {
 
 
 Route::get('/demandes', function () {
-    return demandesController::indexUser();
+    return demandesController::remplacement();
 })->middleware(['auth'])->name('demandes');
 
 Route::post('/newDemande',[demandesController::class,'insertDemande'])->middleware(['auth'])->name('newDemande');
+
+Route::post('/adjointAccepte',[demandesController::class,'adjointAction'])->middleware(['auth'])->name('adjointAccepte');
+
+Route::post('/adjointDecline',[demandesController::class,'adjointAction'])->middleware(['auth'])->name('adjointDecline');
 
 
 
