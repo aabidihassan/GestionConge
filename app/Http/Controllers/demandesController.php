@@ -17,7 +17,7 @@ class demandesController extends Controller
     }
 
     static function remplacement(){
-        $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 0)->get();
+        $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
         return view('user.demandes',['list'=>$data]);
     }
 
@@ -61,10 +61,10 @@ class demandesController extends Controller
             $conge->date_debut = $req->de;
             $conge->date_fin = $req->jusqua;
             $conge->nbJours = $d;
-            $conge->adjoint = 0;
+            $conge->adjoint = 1;
             $conge->chef_service = 0;
             $conge->greffier_chef = 0;
-            $conge->etat = 0;
+            $conge->etat = 1;
             $conge->save();
 
             referance::where('annee', $annee)
@@ -79,7 +79,15 @@ class demandesController extends Controller
     static function adjointAction(Request $req){
             conge::where('id', $req->idd)
             ->update(['adjoint' => $req->action]);
-            return response()->json(['bool'=>true]);
+            if($req->action == 2){
+                conge::where('id', $req->idd)
+            ->update(['chef_service' => 1]);
+            conge::where('id', $req->idd)
+            ->update(['etat' => 2]);
+            }
+            //return response()->json(['bool'=>true]);
+            $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
+            Redirect::to('/demandes');
     }
 
 }

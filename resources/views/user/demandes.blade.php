@@ -104,11 +104,10 @@
     <script>
 
         $("#accept").on('submit', function(e){
-            e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
             var formData =  $('#accept').serializeArray();
             formData.push({name: 'idd', value: idConge});
-            formData.push({name: 'action', value: 1});
+            formData.push({name: 'action', value: 2});
                 console.log(formData);
                 $.ajax({
                     url:"{{url('adjointAccepte')}}",
@@ -121,7 +120,6 @@
         });
 
         $("#decline").on('submit', function(e){
-            e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
             var formData =  $('#accept').serializeArray();
             formData.push({name: 'idd', value: idConge});
