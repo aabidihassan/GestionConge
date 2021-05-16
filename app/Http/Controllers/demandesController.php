@@ -12,8 +12,16 @@ class demandesController extends Controller
 
     }
     static function indexUser(){
-        $data = demande::where('idEmploye', auth()->user()->id)->get();
-        return view('user.demandes',['list'=>$data]);
+        $data = conge::where('id_user', auth()->user()->id)->get();
+        $a2020 = $a2021 = $a2019 = 0;
+        foreach($data as $row){
+            switch ($row->annee){
+                case 2020: $a2020+= $row->nbJours; break;
+                case 2021: $a2021+= $row->nbJours; break;
+                case 2019: $a2019+= $row->nbJours; break;
+            }
+        }
+        return view('user.index', ['a2019'=>$a2019, 'a2020'=>$a2020, 'a2021'=>$a2021]);
     }
 
     static function remplacement(){

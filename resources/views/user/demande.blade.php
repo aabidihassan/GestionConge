@@ -72,9 +72,9 @@
         <td class="cls">السنة</td>
         <td colspan="2">
             <select name="annee" id="annee" class="input">
+                <option value="2019">2019</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
-                <option value="2022">2022</option>
             </select></td>
     </tr>
     <tr>
@@ -155,7 +155,7 @@
 
         
         $("form").on('submit', function(e){
-            e.preventDefault();
+            //e.preventDefault();
 
             if ($("#jusqua").val() <= $("#de").val()) {
                 alert("المرجو وضع فترة صحيحة !!");                

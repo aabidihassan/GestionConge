@@ -1,4 +1,31 @@
 <title>واجهة المستخدم</title>
+<link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+<script>
+window.onload = function () {
+
+// Construct options first and then pass it as a parameter
+var options = {
+	title: {
+		text: "عدد الأيام المستهلكة حسب السنوات"              
+	},
+	data: [              
+	{
+		// Change type to "doughnut", "line", "splineArea", etc.
+		type: "column",
+		dataPoints: [
+			{ label: "2019", y: {{$a2019}}  },
+			{ label: "2020", y: {{$a2020}}  },
+			{ label: "2021", y: {{$a2021}}  }
+		]
+	}
+	]
+};
+
+$("#chartContainer").CanvasJSChart(options);
+
+$('.canvasjs-chart-credit').hide();
+}
+</script>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 
 <x-app-layout>
@@ -52,4 +79,44 @@
 </nav>
     </x-slot>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<center>
+<div id="chartContainer" style="height: 370px; width: 80%; margin-top:3%;"></div>
+</center>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+
+
+
+
 </x-app-layout>

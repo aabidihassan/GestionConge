@@ -20,15 +20,19 @@ use App\Http\Controllers\demandesController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if(!Auth::check()){
+        return view('auth.login');
+    }else{
+        return demandesController::indexUser();
+    }
 });
 
 Route::get('/dashboard', function () {
     if(Auth::user()->type=="admin"){
-        return NbJoursController::showUser();
+        return demandesController::indexUser();
     }
     if(Auth::user()->type=="user"){
-        return NbJoursController::showUser();
+        return demandesController::indexUser();
     }
 })->middleware(['auth'])->name('dashboard');
 

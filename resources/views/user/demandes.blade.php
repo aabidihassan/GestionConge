@@ -104,11 +104,14 @@
     <script>
 
         $("#accept").on('submit', function(e){
+            e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
+            
             var formData =  $('#accept').serializeArray();
             formData.push({name: 'idd', value: idConge});
             formData.push({name: 'action', value: 2});
                 console.log(formData);
+                $(this).closest('tr').remove();
                 $.ajax({
                     url:"{{url('adjointAccepte')}}",
                     type: 'post',
@@ -120,20 +123,25 @@
         });
 
         $("#decline").on('submit', function(e){
+            e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
-            var formData =  $('#accept').serializeArray();
-            formData.push({name: 'idd', value: idConge});
-            formData.push({name: 'action', value: 5});
-                console.log(formData);
+            //var formData =  $('#accept').serializeArray();
+            // formData.push({name: 'idd', value: idConge});
+            // formData.push({name: 'action', value: 5});
+                //console.log(formData);
+            var formData ={
+                idd: idConge,
+                action: 5,
+                _token:'{{ csrf_token() }}'
+            };
+            console.log(formData);
                 $.ajax({
                     url:"{{url('adjointAccepte')}}",
                     type: 'post',
-                    data: formData,
-                    success:function(res){
-                        alert("تم الرفض بنجاح !!");
-                    }
+                    data: formData
                 });
-            
+                alert("تم الرفض بنجاح !!");
+                $(this).closest('tr').remove();
         });
 
     </script>
