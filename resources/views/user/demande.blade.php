@@ -32,7 +32,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('demandes')" :active="request()->routeIs('demandes')">
-                        {{ __('لائحة الطلبات') }}
+                        {{ __('لائحة طلبات  النيابة') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -57,10 +57,10 @@
 <center><h1 id="para"></h1></center>
 <form method="POST" action="{{route('newDemande')}}">
 @csrf
-    <table align="center" style="width: 60%; border: 4px solid black;">
+    <table align="center" style="width: 70%; border: 4px solid black;">
     <tbody>
     <tr>
-        <td class="cls">نوع الرخصة</td>
+        <td class="cls">نوع الرخصة :</td>
         <td colspan="2">
             <select name="type" id="type" class="input">
                 <option value="1">عطلة سنوية</option>
@@ -69,7 +69,7 @@
         </td>
     </tr>
     <tr>
-        <td class="cls">السنة</td>
+        <td class="cls">السنة : </td>
         <td colspan="2">
             <select name="annee" id="annee" class="input">
                 <option value="2019">2019</option>
@@ -78,12 +78,12 @@
             </select></td>
     </tr>
     <tr>
-        <td class="cls">الفترة</td>
-        <td>من: <input name="de" type="text" id="de" required></td>
-        <td>الى: <input name="jusqua" type="text" id="jusqua" required></td>
+        <td class="cls">الفترة : </td>
+        <td>من: <input name="de" type="text" id="de" style="width:80%; border-radius:6px;" required></td>
+        <td>الى: <input name="jusqua" type="text" id="jusqua" style="width:80%; border-radius:6px;" required></td>
     </tr>
     <tr>
-        <td class="cls">القائم بالنيابة</td>
+        <td class="cls">القائم بالنيابة : </td>
         <td colspan="2">
             <select id="adjoint" name="adjoint" class="input">
                 <option value="1">أحمد</option>

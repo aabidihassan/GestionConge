@@ -8,7 +8,7 @@ var options = {
 	title: {
 		text: "عدد الأيام المستهلكة حسب السنوات"              
 	},
-	data: [              
+	data: [           
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
 		type: "column",
@@ -57,7 +57,7 @@ $('.canvasjs-chart-credit').hide();
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('demandes')" :active="request()->routeIs('demandes')">
-                        {{ __('لائحة الطلبات') }}
+                        {{ __('لائحة طلبات النيابة') }}
                     </x-nav-link>
                 </div>
             </div>
