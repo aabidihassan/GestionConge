@@ -6,16 +6,15 @@ window.onload = function () {
 // Construct options first and then pass it as a parameter
 var options = {
 	title: {
-		text: "عدد الأيام المستهلكة حسب السنوات"              
+		text: "العطلة السنوية 2021"              
 	},
 	data: [           
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
-		type: "column",
+		type: "doughnut",
 		dataPoints: [
-			{ label: "2019", y: {{$a2019}}  },
-			{ label: "2020", y: {{$a2020}}  },
-			{ label: "2021", y: {{$a2021}}  }
+			{ label: "عدد الأيام المستهلكة", y: {{$a2021}}  },
+			{ label: "عدد الأيام المتبقية", y: 22-{{$a2021}}  }
 		]
 	}
 	]
@@ -78,35 +77,6 @@ $('.canvasjs-chart-credit').hide();
     </div>
 </nav>
     </x-slot>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <center>
 <div id="chartContainer" style="height: 370px; width: 80%; margin-top:3%;"></div>

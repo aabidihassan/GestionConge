@@ -1,17 +1,61 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in as Admin!
+    <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <!-- Primary Navigation Menu -->
+        <div class="flex justify-between h-16" style="margin-top:-2%;">
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('الصفحة الرئيسية') }}
+                    </x-nav-link>
                 </div>
             </div>
+
+
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                        {{ __('طلب رخصة') }}
+                    </x-nav-link>
+                </div>
+            </div>
+
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('restant')">
+                        {{ __('لائحة طلباتي') }}
+                    </x-nav-link>
+                </div>
+            </div>
+
+
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('demandes')" :active="request()->routeIs('demandes')">
+                        {{ __('لائحة طلبات  النيابة') }}
+                    </x-nav-link>
+                </div>
+            </div>
+
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('restant')">
+                        {{ __('لائحة طلبات العمال') }}
+                    </x-nav-link>
+                </div>
+            </div>
+            
         </div>
+
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
     </div>
+</nav>
+    </x-slot>
+
 </x-app-layout>

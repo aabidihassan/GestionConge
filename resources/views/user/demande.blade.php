@@ -2,7 +2,6 @@
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="css/tablee.css" rel="stylesheet" media="all">
-
 <x-app-layout>
     <x-slot name="header">
         <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
@@ -17,6 +16,16 @@
                 </div>
             </div>
 
+            @if(auth()->user()->type == "chef")
+                <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                        {{ __('طلب العمال') }}
+                    </x-nav-link>
+                </div>
+            </div>
+            @endif
 
             <div class="flex">
                 <!-- Navigation Links -->
@@ -107,7 +116,8 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+
+
     <script>
         (function( factory ) {
             if ( typeof define === "function" && define.amd ) {
@@ -155,7 +165,7 @@
 
         
         $("form").on('submit', function(e){
-            //e.preventDefault();
+            e.preventDefault();
 
             if ($("#jusqua").val() <= $("#de").val()) {
                 alert("المرجو وضع فترة صحيحة !!");                

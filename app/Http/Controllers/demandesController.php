@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\conge;
 use App\Models\referance;
+use App\Models\vacance;
 
 class demandesController extends Controller
 {
-    static function indexAdmin(){
-
+    static function indexChef(){
+        return view('admin.index');
     }
     static function indexUser(){
         $data = conge::where('id_user', auth()->user()->id)->get();
@@ -48,6 +49,8 @@ class demandesController extends Controller
             }
           }
         $how = conge::where('id_user', auth()->user()->id)->where('annee', $annee)->get();
+
+        //$vacanse = vacance::where('date'<$req->jusqua)
         
         $consom = 0;
 
