@@ -41,19 +41,21 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('demandes')" :active="request()->routeIs('demandes')">
-                        {{ __('لائحة طلبات  النيابة') }}
+                        {{ __('لائحة طلبات النيابة') }}
                     </x-nav-link>
                 </div>
             </div>
 
-            <div class="flex">
+            @if(auth()->user()->type == "chef")
+                <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('restant')">
-                        {{ __('لوحة القيادة') }}
+                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                        {{ __('طلب العمال') }}
                     </x-nav-link>
                 </div>
             </div>
+            @endif
             
         </div>
 

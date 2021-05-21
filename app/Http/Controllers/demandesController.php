@@ -22,7 +22,9 @@ class demandesController extends Controller
                 case 2019: $a2019+= $row->nbJours; break;
             }
         }
-        return view('user.index', ['a2019'=>$a2019, 'a2020'=>$a2020, 'a2021'=>$a2021]);
+        $list = conge::where('id_user', auth()->user()->id)->get();
+
+        return view('user.index', ['a2019'=>$a2019, 'a2020'=>$a2020, 'a2021'=>$a2021, 'list'=>$list]);
     }
 
     static function remplacement(){

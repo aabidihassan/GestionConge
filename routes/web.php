@@ -28,12 +28,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if(Auth::user()->type=="chef"){
-        return demandesController::indexChef();
-    }
-    if(Auth::user()->type=="user"){
         return demandesController::indexUser();
-    }
 })->middleware(['auth'])->name('dashboard');
 
 

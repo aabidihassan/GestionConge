@@ -1,5 +1,6 @@
 <title>واجهة المستخدم</title>
 <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+<link href="css/tablee.css" rel="stylesheet" media="all">
 <script>
 window.onload = function () {
 
@@ -8,7 +9,7 @@ var options = {
 	title: {
 		text: "العطلة السنوية 2021"              
 	},
-	data: [           
+	data: [        
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
 		type: "doughnut",
@@ -61,14 +62,16 @@ $('.canvasjs-chart-credit').hide();
                 </div>
             </div>
 
-            <div class="flex">
+            @if(auth()->user()->type == "chef")
+                <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('restant')">
-                        {{ __('لوحة القيادة') }}
+                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                        {{ __('طلب العمال') }}
                     </x-nav-link>
                 </div>
             </div>
+            @endif
             
         </div>
 
@@ -80,6 +83,27 @@ $('.canvasjs-chart-credit').hide();
 
 <center>
 <div id="chartContainer" style="height: 370px; width: 80%; margin-top:3%;"></div>
+
+
+@if(!$list->isEmpty())
+<table align="center" style="width: 80%;">
+    <thead>
+    <tr><th>رقم الطلب</th><th>من</th><th>الى</th><th>نوع الرخصة</th></tr>
+    @foreach($list as $l)
+    <tr>
+        <td>{{$l['referance']}}</td>
+        <td>{{$l['date_debut']}}</td>
+        <td>{{$l['date_fin']}}</td>
+        <td>{{$l['type_vac']}}</td>
+    </tr>
+    @endforeach
+    </thead>
+    <tbody>
+    </tbody>
+    </table>
+@endif
+
+
 </center>
 
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
