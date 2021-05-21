@@ -7,6 +7,7 @@ use Illuminate\Auth\SessionGuard;
 use App\Http\Controllers\NbJoursController;
 use App\Http\Controllers\demandeController;
 use App\Http\Controllers\demandesController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +32,13 @@ Route::get('/dashboard', function () {
         return demandesController::indexUser();
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/service', function () {
+    return ServiceController::serviceDemandes();
+})->middleware(['auth'])->name('service');
 
 
 Route::get('/demande', function () {
-    return view('user.demande');
+    return demandesController::listUsers();
 })->middleware(['auth'])->name('demande');
 
 
@@ -42,6 +46,7 @@ Route::get('/demande', function () {
 Route::get('/demandes', function () {
     return demandesController::remplacement();
 })->middleware(['auth'])->name('demandes');
+
 
 Route::post('/newDemande',[demandesController::class,'insertDemande'])->middleware(['auth'])->name('newDemande');
 

@@ -44,8 +44,8 @@
                 <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
-                        {{ __('طلب العمال') }}
+                    <x-nav-link :href="route('service')" :active="request()->routeIs('service')">
+                        {{ __('طلبات الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -98,8 +98,6 @@
         <td class="cls">السنة : </td>
         <td colspan="2">
             <select name="annee" id="annee" class="input">
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
                 <option value="2021">2021</option>
             </select></td>
     </tr>
@@ -112,9 +110,12 @@
         <td class="cls">القائم بالنيابة : </td>
         <td colspan="2">
             <select id="adjoint" name="adjoint" class="input">
-                <option value="1">أحمد</option>
-                <option value="2">محمد</option>
-                <option value="3">يونس</option>
+
+                @foreach($list as $row)
+
+                <option value="{{$row['id']}}">{{$row['name']}}</option>
+
+                @endforeach
             </select>
         </td>
     </tr>

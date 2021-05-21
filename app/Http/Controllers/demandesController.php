@@ -6,29 +6,35 @@ use Illuminate\Http\Request;
 use App\Models\conge;
 use App\Models\referance;
 use App\Models\vacance;
+use App\Models\User;
 
 class demandesController extends Controller
 {
     static function indexChef(){
         return view('admin.index');
     }
+
+    static function listUsers(){
+        $data = User::where('id_service', auth()->user()->id_service)->where('id', '!=', auth()->user()->id)->get();
+        return view('user.demande', ['list'=>$data]);
+    }
+
     static function indexUser(){
         $data = conge::where('id_user', auth()->user()->id)->get();
         $a2020 = $a2021 = $a2019 = 0;
         foreach($data as $row){
             switch ($row->annee){
-                case 2020: $a2020+= $row->nbJours; break;
                 case 2021: $a2021+= $row->nbJours; break;
-                case 2019: $a2019+= $row->nbJours; break;
             }
         }
         $list = conge::where('id_user', auth()->user()->id)->get();
 
-        return view('user.index', ['a2019'=>$a2019, 'a2020'=>$a2020, 'a2021'=>$a2021, 'list'=>$list]);
+        return view('user.index', ['a2021'=>$a2021, 'list'=>$list]);
     }
 
     static function remplacement(){
-        $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
+        $data = conge::join('users', 'users.id', '=', 'conges.id_user')
+        ->where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
         return view('user.demandes',['list'=>$data]);
     }
 
@@ -87,10 +93,18 @@ class demandesController extends Controller
             $conge->date_debut = $req->de;
             $conge->date_fin = $req->jusqua;
             $conge->nbJours = $d;
-            $conge->adjoint = 1;
-            $conge->chef_service = 0;
+            if(auth()->user()->id_service==2 || auth()->user()->id_service==6 || auth()->user()->type=="chef"){
+                $conge->adjoint = 2;
+                $conge->chef_service = 2;
+                $conge->etat = 3;
+            }else{
+                $conge->adjoint = 1;
+                $conge->chef_service = 0;
+                $conge->etat = 1;
+            }
+            
             $conge->greffier_chef = 0;
-            $conge->etat = 1;
+            
             $conge->save();
 
             referance::where('annee', $annee)
@@ -111,7 +125,10 @@ class demandesController extends Controller
             conge::where('id', $req->idd)
             ->update(['etat' => 2]);
             }
-            //return response()->json(['bool'=>true]);
+            elseif($req->action == 5){
+                conge::where('id', $req->idd)
+                ->update(['etat' => 5]);
+            }
             $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
             Redirect::to('/demandes');
     }

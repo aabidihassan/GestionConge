@@ -23,7 +23,7 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
@@ -36,13 +36,25 @@
                                 required autocomplete="new-password" />
             </div>
 
-            <!-- Confirm Password -->
+            <!-- Confirm Password 
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
                                 name="password_confirmation" required />
+            </div>-->
+
+            <div class="mt-4">
+                <x-label for="Type" :value="__('Type')" />
+
+                <x-input id="type" class="block mt-1 w-full" type="text" name="type" :value="old('type')" required />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="Service" :value="__('Service')" />
+
+                <x-input id="service" class="block mt-1 w-full" type="text" name="service" :value="old('service')" required />
             </div>
 
             <div class="flex items-center justify-end mt-4">
