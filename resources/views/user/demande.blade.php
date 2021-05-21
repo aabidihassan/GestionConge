@@ -1,7 +1,12 @@
 <title>طلب رخصة</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 <link href="css/tablee.css" rel="stylesheet" media="all">
+
 <x-app-layout>
     <x-slot name="header">
         <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
@@ -62,6 +67,27 @@
     </div>
 </nav>
 </x-slot>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" >
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">الاجابة :</h4>
+        </div>
+        <div class="modal-body">
+          <p id="text-p"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="close" data-dismiss="modal">اغلاق</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
     
 <center><h1 id="para"></h1></center>
 <form method="POST" action="{{route('newDemande')}}">
@@ -161,8 +187,10 @@
         });
 
         
-
-
+$('#close').click(function(){
+    $('#myModal').modal('hide');
+});
+        
         
         $("form").on('submit', function(e){
             e.preventDefault();
@@ -183,11 +211,15 @@
                         type: 'post',
                         data: formData,
                         success:function(res){
-                            alert("تم وضع الطلب بنجاح !!");
+                            //alert("تم وضع الطلب بنجاح !!");
+                            $('#text-p').text('تم وضع الطلب بنجاح !!')
+                            $('#myModal').modal('show');
                             $("#jusqua, #de").val("");
                         },
                         error:function(res){
-                            alert("المعذرة !! لا تتوفرون على هذه الفترة");
+                            //alert("المعذرة !! لا تتوفرون على هذه الفترة");
+                            $('#text-p').text('المعذرة !! لا تتوفرون على هذه الفترة')
+                            $('#myModal').modal('show');
                         }
                     });
                 }

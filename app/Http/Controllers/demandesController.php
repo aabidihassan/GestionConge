@@ -39,6 +39,9 @@ class demandesController extends Controller
 
         $d2 = strtotime($req->jusqua);
 
+
+        
+
         $d = $d2 - $d1;
         $d = $d/(86400)+1;
 
@@ -50,7 +53,17 @@ class demandesController extends Controller
           }
         $how = conge::where('id_user', auth()->user()->id)->where('annee', $annee)->get();
 
-        //$vacanse = vacance::where('date'<$req->jusqua)
+        $vacance = vacance::where('date','<=' ,"$req->jusqua")->where('date','>=' ,"$req->de")->get();
+
+        //$vacance = vacance::whereBetween('nbJours', [$req->de , $req->jusqua])->get();
+
+        foreach($vacance as $row){
+            $day = date('D', strtotime($row->date));
+            if($day == "Sat" || $day == "Sun"){
+                break;
+            }
+            $d-=$row->nbJours;
+        }
         
         $consom = 0;
 
@@ -81,7 +94,7 @@ class demandesController extends Controller
             referance::where('annee', $annee)
             ->update(['lastNum' => $data[0]->lastNum+1]);
 
-            return response()->json(['bool'=>true]);
+            return response()->json(['bool'=>true],200);
         }
 
         return response()->json(['error' => 'Error'], 500);
