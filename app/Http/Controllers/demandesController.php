@@ -17,11 +17,14 @@ class demandesController extends Controller
     static function listUsers(){
         $data = User::where('id_service', auth()->user()->id_service)->where('id', '!=', auth()->user()->id)->get();
         return view('user.demande', ['list'=>$data]);
+        //return response()->json(['list'=>$data]);
     }
 
     static function indexUser(){
-        $data = conge::where('id_user', auth()->user()->id)->get();
-        $a2020 = $a2021 = $a2019 = 0;
+        $data = conge::where('id_user', auth()->user()->id)
+        ->where('etat','4')
+        ->get();
+        $a2021 = 0;
         foreach($data as $row){
             switch ($row->annee){
                 case 2021: $a2021+= $row->nbJours; break;
@@ -59,7 +62,10 @@ class demandesController extends Controller
                 $d--;
             }
           }
-        $how = conge::where('id_user', auth()->user()->id)->where('annee', $annee)->get();
+        $how = conge::where('id_user', auth()->user()->id)
+        ->where('annee', $annee)
+        ->where('etat','4')
+        ->get();
 
         $vacance = vacance::where('date','<=' ,"$req->jusqua")->where('date','>=' ,"$req->de")->get();
 
@@ -79,7 +85,7 @@ class demandesController extends Controller
             $consom = $consom + $row->nbJours;
         }
 
-        if($consom + $d <= 22){
+        if($consom + $d <= 22 || $req->type ==2){
             
             $data = referance::where('annee', $annee)->get();
 

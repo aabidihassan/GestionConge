@@ -1,3 +1,5 @@
+<div id="theDemande">
+
 <title>طلب رخصة</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -110,11 +112,8 @@
         <td class="cls">القائم بالنيابة : </td>
         <td colspan="2">
             <select id="adjoint" name="adjoint" class="input">
-
-                @foreach($list as $row)
-
-                <option value="{{$row['id']}}">{{$row['name']}}</option>
-
+                @foreach($list as $l)
+                    <option value="{{$l['id']}}">{{$l['name']}}</option>
                 @endforeach
             </select>
         </td>
@@ -182,7 +181,18 @@
 $('#close').click(function(){
     $('#myModal').modal('hide');
 });
-        
+//  function loadSer(){
+//     $.ajax({
+//         url:"{{url('getEmployeeService')}}",
+//         type: 'get',
+//         success:function(res){
+//             for(var i = 0 ;i<res.list.length;i++)
+//                  {
+//                     $('#adjoint').append("<option value=\""+res.list[i].id+"\">"+res.list[i].name+"</option>");
+//                  }
+//         }
+//     });
+// };
         
         $("form").on('submit', function(e){
             e.preventDefault();
@@ -220,3 +230,4 @@ $('#close').click(function(){
     </script>
 
 </x-app-layout>
+</div>

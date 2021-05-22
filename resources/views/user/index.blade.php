@@ -1,3 +1,5 @@
+<!--
+<div id="index">-->
 <title>واجهة المستخدم</title>
 <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
 <link href="css/tablee.css" rel="stylesheet" media="all">
@@ -8,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 <script>
 window.onload = function () {
+    var r = 22-{{$a2021}};
 
 // Construct options first and then pass it as a parameter
 var options = {
@@ -19,8 +22,8 @@ var options = {
 		// Change type to "doughnut", "line", "splineArea", etc.
 		type: "doughnut",
 		dataPoints: [
-			{ label: "عدد الأيام المستهلكة", y: {{$a2021}}  },
-			{ label: "عدد الأيام المتبقية", y: 22-{{$a2021}}  }
+			{ label: "عدد الأيام المستهلكة : " + {{$a2021}}, y: {{$a2021}}  },
+			{ label: "عدد الأيام المتبقية : " + r , y: 22-{{$a2021}}  }
 		]
 	}
 	]
@@ -29,7 +32,15 @@ var options = {
 $("#chartContainer").CanvasJSChart(options);
 
 $('.canvasjs-chart-credit').hide();
+// $('#theDemande').hide();
+// $('#dem').on("click", function(){
+//     $('#theDemande').show();
+//     $('#index').hide();
+//     loadSer();
+// });
 }
+
+
 </script>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 
@@ -51,7 +62,7 @@ $('.canvasjs-chart-credit').hide();
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                    <x-nav-link id="dem" :href="route('demande')" :active="request()->routeIs('demande')">
                         {{ __('طلب رخصة') }}
                     </x-nav-link>
                 </div>
@@ -134,3 +145,4 @@ $('.canvasjs-chart-credit').hide();
 
 
 </x-app-layout>
+<!--</div>-->

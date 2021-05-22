@@ -1,7 +1,3 @@
-@if(auth()->user()->type!="chef")
-<script>window.location = "/dashboard";</script>
-@endif
-
 <title>لائحة الطلبات</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link href="css/tablee.css" rel="stylesheet" media="all">
@@ -35,36 +31,23 @@
                 </div>
             </div>
 
-
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
-                        {{ __('طلب رخصة') }}
+                    <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                        {{ __('لائحة عطل الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
-
 
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('demandes')" :active="request()->routeIs('demandes')">
-                        {{ __('لائحة طلبات النيابة') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
-            @if(auth()->user()->type == "chef")
-                <div class="flex">
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('service')" :active="request()->routeIs('service')">
                         {{ __('طلبات الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
-            @endif
             
         </div>
 
@@ -74,13 +57,16 @@
 </nav>
     </x-slot>
 
+@if(!$list->isEmpty())
+
     <table align="center" style="width: 90%;">
     <thead>
-    <tr><th>رقم الطلب</th><th>المطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
+    <tr><th>رقم الطلب</th><th>المطالب</th><th>القسم</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
     @foreach($list as $l)
     <tr>
         <td>{{$l['referance']}}</td>
         <td>{{$l['name']}}</td>
+        <td>{{$l['nom']}}</td>
         <td>{{$l['date_debut']}}</td>
         <td>{{$l['date_fin']}}</td>
         <td>
@@ -91,12 +77,12 @@
         </td>
         <td>
         <div style="display: flex;">
-            <form id="accept" method="POST" action="{{route('serviceAccepte')}}">
+            <form id="accept">
                 @csrf
                 <input type="text" value="{{$l['id']}}" name="id" hidden="true">
                 <input type="submit" value="قبول" name="accept">
             </form>
-            <form id="decline" method="POST" action="{{route('serviceDecline')}}">
+            <form id="decline">
                 @csrf
                 <input type="text" value="{{$l['id']}}" name="id" hidden="true">
                 <input type="submit" value="رفض" name="decline" style="background-color:red;">
@@ -109,7 +95,11 @@
     <tbody>
     </tbody>
     </table>
-
+@else
+<center>
+<h1 style="margin-top:3%; ">لا توجد لديك طلبات</h1>
+</center>
+@endif
 
 
 
@@ -129,7 +119,7 @@
                 console.log(formData);
                 $(this).closest('tr').remove();
                 $.ajax({
-                    url:"{{url('serviceAccepte')}}",
+                    url:"{{url('chefAction')}}",
                     type: 'post',
                     data: formData,
                     success:function(res){
@@ -141,10 +131,6 @@
         $("#decline").on('submit', function(e){
             e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
-            //var formData =  $('#accept').serializeArray();
-            // formData.push({name: 'idd', value: idConge});
-            // formData.push({name: 'action', value: 5});
-                //console.log(formData);
             var formData ={
                 idd: idConge,
                 action: 5,
@@ -152,7 +138,7 @@
             };
             console.log(formData);
                 $.ajax({
-                    url:"{{url('serviceAccepte')}}",
+                    url:"{{url('chefAction')}}",
                     type: 'post',
                     data: formData
                 });

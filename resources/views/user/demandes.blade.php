@@ -70,6 +70,8 @@
 </nav>
     </x-slot>
 
+@if(!$list->isEmpty())
+
     <table align="center" style="width: 90%;">
     <thead>
     <tr><th>رقم الطلب</th><th>المطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
@@ -105,7 +107,11 @@
     <tbody>
     </tbody>
     </table>
-
+@else
+<center>
+<h1 style="margin-top:3%; ">لا توجد لديك طلبات</h1>
+</center>
+@endif
 
 
 
