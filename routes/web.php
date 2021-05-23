@@ -24,7 +24,7 @@ Route::get('/', function () {
     if(!Auth::check()){
         return view('auth.login');
     }else{
-        if(auth()->user()->type=="admin") ServiceController::accuile();
+        if(auth()->user()->type=="admin") return ServiceController::accuile();
         return demandesController::indexUser();
     }
 });
@@ -63,9 +63,7 @@ Route::get('/demandes', function () {
 
 Route::post('/newDemande',[demandesController::class,'insertDemande'])->middleware(['auth'])->name('newDemande');
 
-Route::post('/adjointAccepte',[demandesController::class,'adjointAction'])->middleware(['auth'])->name('adjointAccepte');
-
-Route::post('/adjointDecline',[demandesController::class,'adjointAction'])->middleware(['auth'])->name('adjointDecline');
+Route::post('/adjointAction',[demandesController::class,'adjointAction'])->middleware(['auth'])->name('adjointAction');
 
 Route::post('/serviceAccepte',[ServiceController::class,'servicetAction'])->middleware(['auth'])->name('serviceAccepte');
 

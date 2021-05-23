@@ -26,7 +26,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('الصفحة الرئيسية') }}
+                        {{ __('لائحة الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
-                        {{ __('لائحة الموظفين') }}
+                        {{ __('لائحة عطل الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -65,8 +65,8 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title">اختر قسم جديد :</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">الاجابة :</h4>
         </div>
         <div class="modal-body">
         <form id="serv" method="POST" action="{{route('changeService')}}">
@@ -83,8 +83,8 @@
         
         </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-default" id="done" data-dismiss="modal">حفظ</button>
-        <button type="button" class="btn btn-default" id="close" data-dismiss="modal">اغلاق</button>
+        <button type="submit" class="btn btn-default" id="done" data-dismiss="modal" style="background-color: green; color:white;">حفظ</button>
+        <button type="button" class="btn btn-default close" id="close" data-dismiss="modal" style="background-color: red; color:white;">اغلاق</button>
         </form>
         </div>
       </div>
@@ -178,7 +178,7 @@
         });
     });
 
-    $('#close').click(function(){
+    $('.close').click(function(){
         $('#myModal').modal('hide');
     })
     $('#serv').on('submit', function(e){
@@ -193,7 +193,7 @@
                 $('#myModal').modal('hide');
                 $('#serviceUpdate').attr('data',"null");
                 $('#search').submit();
-               // alert('Done');
+                alert('تم التعديل بنجاح');
             }
         });
     });

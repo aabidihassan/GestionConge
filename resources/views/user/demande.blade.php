@@ -68,14 +68,14 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+        <h4 class="modal-title">الاجابة :</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">الاجابة :</h4>
         </div>
         <div class="modal-body">
           <p id="text-p"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" id="close" data-dismiss="modal">اغلاق</button>
+          <button type="button" class="btn btn-default close" id="close" data-dismiss="modal" style="background-color: red; color:white;">اغلاق</button>
         </div>
       </div>
       
@@ -178,7 +178,7 @@
         });
 
         
-$('#close').click(function(){
+$('.close').click(function(){
     $('#myModal').modal('hide');
 });
 //  function loadSer(){
@@ -198,12 +198,14 @@ $('#close').click(function(){
             e.preventDefault();
 
             if ($("#jusqua").val() <= $("#de").val()) {
-                alert("المرجو وضع فترة صحيحة !!");                
+                $('#text-p').text('المرجو وضع فترة صحيحة !!')
+                $('#myModal').modal('show');               
             }
             else if($("#jusqua").val() > $("#de").val()){
 
                 if($.datepicker.formatDate("yy-mm-dd",new Date()) >= $("#de").val()){
-                    alert("المرجو وضع فترة صحيحة !!");
+                    $('#text-p').text('المرجو وضع فترة صحيحة !!')
+                    $('#myModal').modal('show');
                 }
                 else{
                     var formData =  $('form').serializeArray();

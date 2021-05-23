@@ -37,7 +37,8 @@ class demandesController extends Controller
 
     static function remplacement(){
         $data = conge::join('users', 'users.id', '=', 'conges.id_user')
-        ->where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
+        ->where('id_adjoint', auth()->user()->id)->where('adjoint', 1)
+        ->get(['users.name', 'conges.*']);
         return view('user.demandes',['list'=>$data]);
     }
 
@@ -127,16 +128,15 @@ class demandesController extends Controller
             ->update(['adjoint' => $req->action]);
             if($req->action == 2){
                 conge::where('id', $req->idd)
-            ->update(['chef_service' => 1]);
-            conge::where('id', $req->idd)
-            ->update(['etat' => 2]);
+                ->update(['chef_service' => 1]);
+                conge::where('id', $req->idd)
+                ->update(['etat' => 2]);
             }
             elseif($req->action == 5){
                 conge::where('id', $req->idd)
                 ->update(['etat' => 5]);
             }
-            $data = conge::where('id_adjoint', auth()->user()->id)->where('adjoint', 1)->get();
-            Redirect::to('/demandes');
+            return response()->json(['bool' => false], 200);
     }
 
 }

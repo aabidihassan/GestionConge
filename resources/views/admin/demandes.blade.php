@@ -30,7 +30,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('الصفحة الرئيسية') }}
+                        {{ __('لائحة الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -60,6 +60,29 @@
     </div>
 </nav>
     </x-slot>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" >
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">الاجابة :</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="text-p"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default close" id="close" data-dismiss="modal" style="background-color: red; color:white;">اغلاق</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 
 @if(!$list->isEmpty())
 
@@ -101,7 +124,7 @@
     </table>
 @else
 <center>
-<h1 style="margin-top:3%; ">لا توجد لديك طلبات</h1>
+<h1 style="margin-top:3%; ">لا توجد أي طلبات</h1>
 </center>
 @endif
 
@@ -112,7 +135,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
-
+$('.close').click(function(){
+    $('#myModal').modal('hide');
+});
         $("#accept").on('submit', function(e){
             e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
@@ -121,15 +146,17 @@
             formData.push({name: 'idd', value: idConge});
             formData.push({name: 'action', value: 2});
                 console.log(formData);
-                $(this).closest('tr').remove();
+                
                 $.ajax({
                     url:"{{url('chefAction')}}",
                     type: 'post',
                     data: formData,
                     success:function(res){
-                        alert("تم القبول بنجاح !!");
+                        $('#text-p').text('تم قبول الطلب بنجاح !!')
+                        $('#myModal').modal('show');
                     }
                 });
+                $(this).closest('tr').remove();
         });
 
         $("#decline").on('submit', function(e){
@@ -144,9 +171,13 @@
                 $.ajax({
                     url:"{{url('chefAction')}}",
                     type: 'post',
-                    data: formData
+                    data: formData,
+                    success:function(res){
+                        $('#text-p').text('تم رفض الطلب بنجاح !!')
+                        $('#myModal').modal('show');
+                        
+                    }
                 });
-                alert("تم الرفض بنجاح !!");
                 $(this).closest('tr').remove();
         });
 

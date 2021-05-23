@@ -13,7 +13,7 @@ class ServiceController extends Controller
         $data = conge::join('users', 'conges.id_user', '=', 'users.id')
         ->where('id_service', '=', auth()->user()->id_service)
         ->where('chef_service', 1)
-        ->get();
+        ->get(['users.name', 'conges.*']);
 
         return view('user.demandeservice', ['list'=>$data]);
 
@@ -70,7 +70,8 @@ class ServiceController extends Controller
         ->where('date_fin', '>', "2021-$req->mois-01")
         ->where('date_debut', '<', "2021-$req->mois-30")
         ->where('conges.etat', '=', '4')
-        ->get();
+        ->get(['users.name', 'conges.*']);
+
         return response()->json(['lt'=>$data]);
     }
 
@@ -78,7 +79,7 @@ class ServiceController extends Controller
         $data = conge::join('users', 'users.id', '=', 'conges.id_user')
         ->join('services', 'users.id_service', '=', 'services.id')
         ->where('conges.greffier_chef', '=', '1')
-        ->get();
+        ->get(['users.name', 'conges.*']);
         return view('admin.demandes', ['list'=>$data]);
     }
 

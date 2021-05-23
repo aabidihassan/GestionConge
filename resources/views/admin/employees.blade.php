@@ -81,6 +81,9 @@
                     @endfor
                 </select>
             </td>
+            <td class="cls">
+            <button id="sub" style="width:90%;">بحث</button>
+            </td>
         </tr>
         </thead>
     </table>
@@ -116,9 +119,6 @@
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
 <script>
-$("#service, #mois").change(function(){
-        $('form').submit();
-});
     $('#mytable').hide();
     $('#nothing').hide();
     $('form').on('submit', function(e){

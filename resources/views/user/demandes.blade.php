@@ -70,6 +70,27 @@
 </nav>
     </x-slot>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" >
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">الاجابة :</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="text-p"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default close" id="close" data-dismiss="modal" style="background-color: red; color:white;">اغلاق</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 @if(!$list->isEmpty())
 
     <table align="center" style="width: 90%;">
@@ -89,12 +110,12 @@
         </td>
         <td>
         <div style="display: flex;">
-            <form id="accept" method="POST" action="{{route('adjointAccepte')}}">
+            <form id="accept" method="POST" action="{{route('adjointAction')}}">
                 @csrf
                 <input type="text" value="{{$l['id']}}" name="id" hidden="true">
                 <input type="submit" value="قبول" name="accept">
             </form>
-            <form id="decline" method="POST" action="{{route('adjointDecline')}}">
+            <form id="decline" method="POST" action="{{route('adjointAction')}}">
                 @csrf
                 <input type="text" value="{{$l['id']}}" name="id" hidden="true">
                 <input type="submit" value="رفض" name="decline" style="background-color:red;">
@@ -120,22 +141,29 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
+$('.close').click(function(){
+    $('#myModal').modal('hide');
+});
 
         $("#accept").on('submit', function(e){
             e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
             
-            var formData =  $('#accept').serializeArray();
-            formData.push({name: 'idd', value: idConge});
-            formData.push({name: 'action', value: 2});
+            var formData ={
+                idd: idConge,
+                action: 2,
+                _token:'{{ csrf_token() }}'
+            };
                 console.log(formData);
                 $(this).closest('tr').remove();
                 $.ajax({
-                    url:"{{url('adjointAccepte')}}",
+                    url:"{{url('adjointAction')}}",
                     type: 'post',
                     data: formData,
                     success:function(res){
-                        alert("تم القبول بنجاح !!");
+                        $('#text-p').text('تم قبول الطلب بنجاح !!')
+                        $('#myModal').modal('show');
+                        
                     }
                 });
         });
@@ -143,23 +171,24 @@
         $("#decline").on('submit', function(e){
             e.preventDefault();
             var idConge = $(this).closest("tr").find("input[name='id']").val();
-            //var formData =  $('#accept').serializeArray();
-            // formData.push({name: 'idd', value: idConge});
-            // formData.push({name: 'action', value: 5});
-                //console.log(formData);
             var formData ={
                 idd: idConge,
                 action: 5,
                 _token:'{{ csrf_token() }}'
             };
-            console.log(formData);
+            $(this).closest('tr').remove();
                 $.ajax({
-                    url:"{{url('adjointAccepte')}}",
+                    url:"{{url('adjointAction')}}",
                     type: 'post',
-                    data: formData
+                    data: formData,
+                    success:function(res){
+                        $('#text-p').text('تم رفض الطلب بنجاح !!')
+                        $('#myModal').modal('show');
+                        
+                    }
                 });
-                alert("تم الرفض بنجاح !!");
-                $(this).closest('tr').remove();
+                
+                
         });
 
     </script>
