@@ -40,6 +40,29 @@ class ServiceController extends Controller
         return view('admin.employees', ['list'=>$data]);
     }
 
+    static function Services(){
+        $data = service::all();
+        return view('admin.employees', ['list'=>$data]);
+    }
+
+    static function accuile(){
+        $data = service::all();
+        return view('admin.index', ['list'=>$data]);
+    }
+
+    static function employees(Request $req){
+        $data = User::join('services', 'services.id', '=', 'users.id_service')
+        ->where('users.id_service', '=', $req->service)
+        ->get(['users.id AS id_user', 'services.*', 'users.name']);
+        return response()->json(['lt'=>$data]);
+    }
+
+    static function changeService(Request $req){
+        User::where('id', $req->idEmp)
+        ->update(['id_service' => $req->services]);
+        return response()->json(['bool'=>true],200);
+    }
+
     static function getEmployees(Request $req){
 
         $data = User::join('conges', 'conges.id_user', '=', 'users.id')

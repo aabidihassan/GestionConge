@@ -1,3 +1,7 @@
+@if(auth()->user()->type!="admin")
+<script>window.location = "/dashboard";</script>
+@endif
+
 <title>لائحة الطلبات</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link href="css/tablee.css" rel="stylesheet" media="all">
@@ -61,7 +65,7 @@
             <td class="cls">القسم : </td>
             <td colspan="2">
                 <select id="service" name="service" class="input">
-
+                    <option selected disabled>اختر القسم</option>
                     @foreach($list as $row)
 
                     <option value="{{$row['id']}}">{{$row['nom']}}</option>
@@ -76,9 +80,6 @@
                         <option value="{{$i}}">{{$i}}</option>
                     @endfor
                 </select>
-            </td>
-            <td class="cls">
-            <button id="sub" style="width:90%;">بحث</button>
             </td>
         </tr>
         </thead>
@@ -115,6 +116,9 @@
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
 <script>
+$("#service, #mois").change(function(){
+        $('form').submit();
+});
     $('#mytable').hide();
     $('#nothing').hide();
     $('form').on('submit', function(e){

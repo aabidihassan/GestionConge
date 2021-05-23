@@ -1,3 +1,7 @@
+@if(auth()->user()->type!="admin")
+<script>window.location = "/dashboard";</script>
+@endif
+
 <title>لائحة الطلبات</title>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'rtl')}}">
 <link href="css/tablee.css" rel="stylesheet" media="all">

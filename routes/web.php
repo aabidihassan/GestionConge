@@ -24,15 +24,13 @@ Route::get('/', function () {
     if(!Auth::check()){
         return view('auth.login');
     }else{
-        if(auth()->user()->type=="admin")
-            return view('admin.index');
+        if(auth()->user()->type=="admin") ServiceController::accuile();
         return demandesController::indexUser();
     }
 });
 
 Route::get('/dashboard', function () {
-    if(auth()->user()->type=="admin")
-        return view('admin.index');
+    if(auth()->user()->type=="admin") return ServiceController::accuile();
     return demandesController::indexUser();
 })->middleware(['auth'])->name('dashboard');
 
@@ -57,10 +55,6 @@ Route::get('/demandes', function () {
     return demandesController::remplacement();
 })->middleware(['auth'])->name('demandes');
 
-Route::get('/index', function () {
-    return view('index');
-})->middleware(['auth'])->name('index');
-
 
 // Route::get('/getEmployeeService', function () {
 //     return demandesController::listUsers();
@@ -79,7 +73,11 @@ Route::post('/serviceDecline',[ServiceController::class,'serviceAction'])->middl
 
 Route::post('/getEmployees',[ServiceController::class,'getEmployees'])->middleware(['auth'])->name('getEmployees');
 
+Route::post('/employees',[ServiceController::class,'employees'])->middleware(['auth'])->name('employees');
+
 Route::post('/chefAction',[ServiceController::class,'chefAction'])->middleware(['auth'])->name('chefAction');
+
+Route::post('/changeService',[ServiceController::class,'changeService'])->middleware(['auth'])->name('changeService');
 
 //Route::post('/getEmployeeService',[demandesController::class,'listUsers'])->middleware(['auth'])->name('getEmployeeService');
 
