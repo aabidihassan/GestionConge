@@ -15,7 +15,12 @@ class ServiceController extends Controller
         ->where('chef_service', 1)
         ->get(['users.name', 'conges.*']);
 
-        return view('user.demandeservice', ['list'=>$data]);
+        $dd = User::join('conges', 'conges.id_adjoint', '=', 'users.id')
+        ->where('id_service', '=', auth()->user()->id_service)
+        ->where('chef_service', 1)
+        ->get('users.name AS ad');
+
+        return view('user.demandeservice', ['list'=>$data, 'lt'=>$dd]);
 
     }
 
@@ -68,19 +73,34 @@ class ServiceController extends Controller
         $data = User::join('conges', 'conges.id_user', '=', 'users.id')
         ->where('users.id_service', '=', $req->service)
         ->where('date_fin', '>', "2021-$req->mois-01")
-        ->where('date_debut', '<', "2021-$req->mois-30")
+        ->where('date_debut', '<', "2021-$req->mois-31")
         ->where('conges.etat', '=', '4')
         ->get(['users.name', 'conges.*']);
 
-        return response()->json(['lt'=>$data]);
+        $min = service::where('id', $req->service)->get('services.minim');
+
+        $how = User::where('id_service', '=', $req->service)->count();
+
+        $dd = User::join('conges', 'conges.id_adjoint', '=', 'users.id')
+        ->where('id_service', '=', $req->service)
+        ->where('date_fin', '>', "2021-$req->mois-01")
+        ->where('date_debut', '<', "2021-$req->mois-31")
+        ->where('conges.etat', 4)
+        ->get('users.name AS ad');
+
+        return response()->json(['lt'=>$data, 'nb'=>$how, 'min'=>$min[0], 'list'=>$dd]);
     }
 
     static function getDemandes(){
         $data = conge::join('users', 'users.id', '=', 'conges.id_user')
         ->join('services', 'users.id_service', '=', 'services.id')
         ->where('conges.greffier_chef', '=', '1')
-        ->get(['users.name', 'conges.*']);
-        return view('admin.demandes', ['list'=>$data]);
+        ->get(['users.name', 'conges.*', 'services.nom']);
+
+        $dd = User::join('conges', 'conges.id_adjoint', '=', 'users.id')
+        ->where('conges.greffier_chef', 1)
+        ->get('users.name AS ad');
+        return view('admin.demandes', ['list'=>$data, 'lt'=>$dd]);
     }
 
     static function chefAction(Request $req){

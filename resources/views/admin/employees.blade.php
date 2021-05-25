@@ -12,6 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 
+
 <style>
     .cls{
         width:9%;
@@ -91,17 +92,25 @@
 
 <center>
 <h1 id="nothing" style="margin-top:2%;">لا توجد أي عطل</h1>
+<table id="nb" align="center" style="width: 50%;">
+    <tbody>
+
+    </tbody>
+</table>
 </center>
+
+
 
 <table id="mytable" align="center" style="width: 90%;">
     <thead>
-    <tr><th>رقم الطلب</th><th>المطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th></tr>
+    <tr><th>رقم الطلب</th><th>الطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>القائم بالنيابة</th></tr>
     
     </thead>
     <tbody>
 
     </tbody>
 </table>
+
 <center>
 <div id="chartContainer" style="height: 370px; width: 70%; margin-top:3%; margin-bottom:3%;"></div>
 </center>
@@ -119,11 +128,15 @@
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
 <script>
+window.$ = window.jquery = require('./node_modules/jquery');
+window.dt = require('./node_modules/datatables.net')();
     $('#mytable').hide();
     $('#nothing').hide();
+    $('#nb').hide();
     $('form').on('submit', function(e){
         e.preventDefault();
         $('#mytable tbody').empty();
+        $('#nb tbody').empty();
         $('#nothing').hide();
         $('#mytable').hide();
         var formData =  $('form').serializeArray();
@@ -135,9 +148,15 @@
                  console.log(res.lt);
                 if(res.lt.length==0){
                     $('#nothing').show();
-                }else{  
-                    var hh =[];     
+                }else{
                $('#mytable').show();
+               $('#nb').show();
+               $('#nb tbody').eq(0).append("<tr>");
+               $('#nb tbody').eq(0).append("<td>عدد الموظفين بهذا القسم :</td>");
+               $('#nb tbody').eq(0).append("<td>"+res.nb+"</td></tr>");
+               $('#nb tbody').eq(0).append("<tr>");
+               $('#nb tbody').eq(0).append("<td>أقل عدد :</td>");
+               $('#nb tbody').eq(0).append("<td>"+res.min['minim']+"</td></tr>");
                for(var i = 0 ;i<res.lt.length;i++){
                  
                     $('#mytable tbody').eq(0).append("<tr>");
@@ -150,7 +169,7 @@
                         case 1: $('#mytable tbody').eq(0).append("<td>عطلة سنوية</td>"); break;
                         case 2: $('#mytable tbody').eq(0).append("<td>اذن بالتغيب</td>"); break;
                     }
-
+                    $('#mytable tbody').eq(0).append("<td>"+res.list[i].ad+"</td>");
                    $('#mytable tbody').eq(0).append("</tr>");
                  }
 

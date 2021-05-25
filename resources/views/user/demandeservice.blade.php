@@ -99,7 +99,8 @@
 
     <table align="center" style="width: 90%;">
     <thead>
-    <tr><th>رقم الطلب</th><th>المطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
+    <tr><th>رقم الطلب</th><th>الطالب</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>القائم بالنيابة</th><th>قبول أو رفض</th></tr>
+    @php($i =0)
     @foreach($list as $l)
     <tr>
         <td>{{$l['referance']}}</td>
@@ -111,6 +112,10 @@
                 @case(1) عطلة سنوية @break
                 @case(2) اذن بالتغيب @break
             @endswitch
+        </td>
+        <td>
+            {{$lt[$i]['ad']}}
+            @php($i++)
         </td>
         <td>
         <div style="display: flex;">
@@ -183,7 +188,6 @@ $('.close').click(function(){
                     success:function(res){
                         $('#text-p').text('تم رفض الطلب بنجاح !!')
                         $('#myModal').modal('show');
-                        
                     }
                 });
         });

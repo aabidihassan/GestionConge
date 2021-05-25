@@ -88,7 +88,8 @@
 
     <table align="center" style="width: 90%;">
     <thead>
-    <tr><th>رقم الطلب</th><th>المطالب</th><th>القسم</th><th>من</th><th>الى</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
+    <tr><th>رقم الطلب</th><th>الطالب</th><th>القسم</th><th>من</th><th>الى</th><th>القائم بالنيابة</th><th>نوع الرخصة</th><th>قبول أو رفض</th></tr>
+    @php($i=0)
     @foreach($list as $l)
     <tr>
         <td>{{$l['referance']}}</td>
@@ -96,6 +97,7 @@
         <td>{{$l['nom']}}</td>
         <td>{{$l['date_debut']}}</td>
         <td>{{$l['date_fin']}}</td>
+        <td>{{$lt[$i]['ad']}}</td>
         <td>
             @switch($l['type_vac'])
                 @case(1) عطلة سنوية @break
