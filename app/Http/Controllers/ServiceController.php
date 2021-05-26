@@ -6,6 +6,7 @@ use App\Models\conge;
 use App\Models\User;
 use App\Models\service;
 use Illuminate\Http\Request;
+use PDF;
 
 class ServiceController extends Controller
 {
@@ -53,6 +54,11 @@ class ServiceController extends Controller
     static function accuile(){
         $data = service::all();
         return view('admin.index', ['list'=>$data]);
+    }
+
+    static function liste(){
+        $data = User::where('type', '!=', 'admin')->get();
+        return view('admin.presence', ['liste'=>$data]);
     }
 
     static function employees(Request $req){
@@ -107,12 +113,21 @@ class ServiceController extends Controller
         conge::where('id', $req->idd)
         ->update(['greffier_chef' => $req->action]);
         if($req->action == 2){
-            conge::where('id', $req->idd)
-            ->update(['etat' => 4]);
+            conge::join('users', 'conges.id_user', '=', 'users.id')
+            ->where('conges.id', $req->idd)
+            ->update(['conges.etat' => 4, 'users.etat' => 2]);
         }
         elseif($req->action == 5){
             conge::where('id', $req->idd)
             ->update(['etat' => 5]);
         }
+    }
+    static function download(){
+        $data = User::all();
+        $pdf = PDF::loadView('admin.presence', ['liste'=>$data]);
+        $pdf->autoScriptToLang = true;
+        $pdf->autoArabic = true;
+        $pdf->autoLangToFont = true;
+        return $pdf->download('presence.pdf');
     }
 }

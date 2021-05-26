@@ -47,6 +47,14 @@ Route::get('/demande', function () {
     return demandesController::listUsers();
 })->middleware(['auth'])->name('demande');
 
+Route::get('/presence', function () {
+    return ServiceController::liste();
+})->middleware(['auth'])->name('presence');
+
+Route::get('/download', function () {
+    return ServiceController::download();
+})->middleware(['auth'])->name('download');
+
 
 
 Route::get('/demandes', function () {
@@ -54,11 +62,6 @@ Route::get('/demandes', function () {
     return ServiceController::getDemandes();
     return demandesController::remplacement();
 })->middleware(['auth'])->name('demandes');
-
-
-// Route::get('/getEmployeeService', function () {
-//     return demandesController::listUsers();
-// })->middleware(['auth'])->name('getEmployeeService');
 
 
 Route::post('/newDemande',[demandesController::class,'insertDemande'])->middleware(['auth'])->name('newDemande');

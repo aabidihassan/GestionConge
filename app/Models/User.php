@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'type',
         'id_service',
+        'etat'
     ];
 
     /**
