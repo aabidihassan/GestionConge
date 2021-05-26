@@ -58,7 +58,7 @@ class ServiceController extends Controller
     static function employees(Request $req){
         $data = User::join('services', 'services.id', '=', 'users.id_service')
         ->where('users.id_service', '=', $req->service)
-        ->get(['users.id AS id_user', 'services.*', 'users.name']);
+        ->get(['users.id AS id_user', 'users.type', 'services.*', 'users.name']);
         return response()->json(['lt'=>$data]);
     }
 

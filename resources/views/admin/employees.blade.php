@@ -27,7 +27,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('الصفحة الرئيسية') }}
+                        {{ __('لائحة الموظفين') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -66,7 +66,6 @@
             <td class="cls">القسم : </td>
             <td colspan="2">
                 <select id="service" name="service" class="input">
-                    <option selected disabled>اختر القسم</option>
                     @foreach($list as $row)
 
                     <option value="{{$row['id']}}">{{$row['nom']}}</option>
@@ -122,14 +121,14 @@
 
 
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-window.$ = window.jquery = require('./node_modules/jquery');
-window.dt = require('./node_modules/datatables.net')();
     $('#mytable').hide();
     $('#nothing').hide();
     $('#nb').hide();
@@ -172,7 +171,6 @@ window.dt = require('./node_modules/datatables.net')();
                     $('#mytable tbody').eq(0).append("<td>"+res.list[i].ad+"</td>");
                    $('#mytable tbody').eq(0).append("</tr>");
                  }
-
                 }
                 
             }
