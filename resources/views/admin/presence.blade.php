@@ -48,12 +48,12 @@ window.print();
                 <td>{{$row->name}}</td>
                 <td>
                 @if($row->etat==2)
-                    عطلة
+                    رخصة
                 @endif
                 </td>
                 <td>
                 @if($row->etat==2)
-                    عطلة
+                    رخصة
                 @endif</td>
                 <td></td>
             </tr>

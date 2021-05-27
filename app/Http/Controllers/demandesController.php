@@ -15,7 +15,10 @@ class demandesController extends Controller
     }
 
     static function listUsers(){
-        $data = User::where('id_service', auth()->user()->id_service)->where('id', '!=', auth()->user()->id)->get();
+        $data = User::where('id_service', auth()->user()->id_service)
+        ->where('id', '!=', auth()->user()->id)
+        ->where('etat', '=', 1)
+        ->get();
         return view('user.demande', ['list'=>$data]);
         //return response()->json(['list'=>$data]);
     }
