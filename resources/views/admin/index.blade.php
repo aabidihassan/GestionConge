@@ -130,7 +130,7 @@
 <h1 id="nothing" style="margin-top:2%;">لا بوجد أي موظف بهذا القسم</h1>
 </center>
 
-<table id="mytable" align="center" style="width: 90%;">
+<table id="mytable" align="center" style="width: 90%; margin-bottom:3%;">
     <thead>
     <tr><th>اسم الموظف</th><th>النوع</th><th>القسم</th><th></th></tr>
     

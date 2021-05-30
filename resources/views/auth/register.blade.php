@@ -48,7 +48,7 @@
             <div class="mt-4">
                 <x-label for="Type" :value="__('Type')" />
 
-                <x-input id="type" class="block mt-1 w-full" type="text" name="type" :value="old('type')" required />
+                <x-input id="type" class="block mt-1 w-full" type="text" name="type" :value="old('type')" />
             </div>
 
             <div class="mt-4">

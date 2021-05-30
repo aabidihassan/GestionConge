@@ -22,7 +22,7 @@ window.print();
 </head>
 <body dir="rtl">
 <div class="divFooter">
-<img src="images/header.png" class="header">
+<img src="images/header.PNG" alt="logoooo" class="header">
 <hr><hr>
 
 <center>
