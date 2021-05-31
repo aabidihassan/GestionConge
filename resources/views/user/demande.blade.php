@@ -36,7 +36,7 @@
 <center><h1 id="para"></h1></center>
 <form method="POST" action="{{route('newDemande')}}">
 @csrf
-    <table align="center" style="width: 70%; border: 4px solid black;">
+    <table align="center" style="width: 70%; height:500px; border: 4px solid black;">
     <tbody>
     <tr>
         <td class="cls">نوع الرخصة :</td>

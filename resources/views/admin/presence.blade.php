@@ -12,12 +12,6 @@ window.print();
     size: auto;   /* auto is the initial value */
     margin-top: 2%;  /* this affects the margin in the printer settings */
 }
-/* @media print {
-  div.divFooter {
-    position: fixed;
-    top: 0;
-  }
-} */
 </style>
 </head>
 <body dir="rtl">

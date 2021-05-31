@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\service;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Facades\Hash;
 
 class ServiceController extends Controller
 {
@@ -129,5 +130,17 @@ class ServiceController extends Controller
         $pdf->autoArabic = true;
         $pdf->autoLangToFont = true;
         return $pdf->download('presence.pdf');
+    }
+
+    static function pass(){
+        $data = service::all();
+        return view('user.password', ['list'=>$data]);
+    }
+
+    static function changePass(Request $req){
+        $pass = Hash::make($req->pass);
+        User::where('id', $req->idEmp)
+        ->update(['password' => $pass]);
+        return response()->json(['bool'=>true],200);
     }
 }

@@ -41,6 +41,18 @@
                 </div>
             </div>
             @endif
+
+
+            @if(auth()->user()->id==2 || auth()->user()->id==86)
+            <div class="flex">
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('password')" :active="request()->routeIs('password')">
+                        {{ __('تعديل كلمة المرور') }}
+                    </x-nav-link>
+                </div>
+            </div>
+            @endif
             
         </div>
 

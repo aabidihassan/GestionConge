@@ -63,6 +63,10 @@ Route::get('/demandes', function () {
     return demandesController::remplacement();
 })->middleware(['auth'])->name('demandes');
 
+Route::get('/password', function () {
+    return ServiceController::pass();
+})->middleware(['auth'])->name('password');
+
 
 Route::post('/newDemande',[demandesController::class,'insertDemande'])->middleware(['auth'])->name('newDemande');
 
@@ -79,6 +83,8 @@ Route::post('/employees',[ServiceController::class,'employees'])->middleware(['a
 Route::post('/chefAction',[ServiceController::class,'chefAction'])->middleware(['auth'])->name('chefAction');
 
 Route::post('/changeService',[ServiceController::class,'changeService'])->middleware(['auth'])->name('changeService');
+
+Route::post('/changePass',[ServiceController::class,'changePass'])->middleware(['auth'])->name('changePass');
 
 //Route::post('/getEmployeeService',[demandesController::class,'listUsers'])->middleware(['auth'])->name('getEmployeeService');
 
