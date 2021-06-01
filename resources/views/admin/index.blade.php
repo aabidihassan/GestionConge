@@ -162,11 +162,9 @@
             type: 'post',
             data: formData,
             success:function(res){
-                 console.log(res.lt);
                 if(res.lt.length==0){
                     $('#nothing').show();
-                }else{  
-                    var hh =[];     
+                }else{      
                $('#mytable').show();
                for(var i = 0 ;i<res.lt.length;i++){
                  
